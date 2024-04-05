@@ -1,25 +1,27 @@
 package Form;
 
+import Config.Conn;
 import java.awt.Color;
 import java.sql.*;
 import javax.swing.JOptionPane;
 
-
 public class Formlogin extends javax.swing.JFrame {
-    
+
     Connection cn = Config.Conn.GetConn();
     Statement st;
     ResultSet rs;
-    
+
     public Formlogin() {
         initComponents();
-        txtuser.setBackground(new java.awt.Color(0,0,0,1));
-        txtpwd.setBackground(new java.awt.Color(0,0,0,1));
+        txtuser.setBackground(new java.awt.Color(0, 0, 0, 1));
+        txtpwd.setBackground(new java.awt.Color(0, 0, 0, 1));
     }
-    public void clear(){
+
+    public void clear() {
         txtuser.setText("");
         txtpwd.setText("");
     }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -43,6 +45,8 @@ public class Formlogin extends javax.swing.JFrame {
         txtpwd = new javax.swing.JPasswordField();
         Btnlogin = new javax.swing.JPanel();
         JBtnlogin = new javax.swing.JLabel();
+        txtrfid = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -219,6 +223,21 @@ public class Formlogin extends javax.swing.JFrame {
 
         jPanel2.add(Btnlogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 240, 310, 40));
 
+        txtrfid.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtrfidActionPerformed(evt);
+            }
+        });
+        txtrfid.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtrfidKeyReleased(evt);
+            }
+        });
+        jPanel2.add(txtrfid, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 340, 280, 40));
+
+        jLabel7.setText("jLabel7");
+        jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 344, 280, 30));
+
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(456, 0, 450, 420));
 
         setSize(new java.awt.Dimension(905, 417));
@@ -230,7 +249,7 @@ public class Formlogin extends javax.swing.JFrame {
     }//GEN-LAST:event_XcloseMouseClicked
 
     private void disableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_disableMouseClicked
-        txtpwd.setEchoChar((char)0);
+        txtpwd.setEchoChar((char) 0);
         disable.setVisible(false);
         disable.setEnabled(false);
         show.setEnabled(true);
@@ -238,7 +257,7 @@ public class Formlogin extends javax.swing.JFrame {
     }//GEN-LAST:event_disableMouseClicked
 
     private void showMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_showMouseClicked
-        txtpwd.setEchoChar((char)8226);
+        txtpwd.setEchoChar((char) 8226);
         disable.setVisible(true);
         disable.setEnabled(true);
         show.setEnabled(false);
@@ -246,15 +265,15 @@ public class Formlogin extends javax.swing.JFrame {
     }//GEN-LAST:event_showMouseClicked
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        for (double i = 0.0; i <=1.0; i = i+0.1) {
-            String val = i+ "";
+        for (double i = 0.0; i <= 1.0; i = i + 0.1) {
+            String val = i + "";
             float f = Float.valueOf(val);
             this.setOpacity(f);
-            try{
+            try {
                 Thread.sleep(50);
-            }catch(Exception e){
+            } catch (Exception e) {
             }
-            
+
         }
     }//GEN-LAST:event_formWindowOpened
 
@@ -271,7 +290,7 @@ public class Formlogin extends javax.swing.JFrame {
     private void BtnloginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnloginMouseClicked
         try {
             st = cn.createStatement();
-            String Sql = "SELECT * FROM tbl_users WHERE username = '"+txtuser.getText()+"'";
+            String Sql = "SELECT * FROM tbl_users WHERE username = '" + txtuser.getText() + "'";
             rs = st.executeQuery(Sql);
             if (rs.next()) {
                 String Iduser = rs.getString("id_user");
@@ -282,19 +301,19 @@ public class Formlogin extends javax.swing.JFrame {
                         Formadmin admin = new Formadmin(Iduser);
                         admin.setVisible(true);
                         this.setVisible(false);
-                    }else if (Status.equals("Kasir")) {
+                    } else if (Status.equals("Kasir")) {
                         FormKasir kasir = new FormKasir(Iduser);
                         kasir.setVisible(true);
                         this.setVisible(false);
-                    }else if (Status.equals("Karyawan")) {
+                    } else if (Status.equals("Karyawan")) {
                         FormKaryawan karyawan = new FormKaryawan(Iduser);
                         karyawan.setVisible(true);
                         this.setVisible(false);
                     }
-                }else{
+                } else {
                     JOptionPane.showMessageDialog(null, "Password yang anda masukkan tidak sesuai");
                 }
-            }else{
+            } else {
                 JOptionPane.showMessageDialog(null, "User tidak dapat ditemukan");
                 clear();
             }
@@ -304,14 +323,75 @@ public class Formlogin extends javax.swing.JFrame {
     }//GEN-LAST:event_BtnloginMouseClicked
 
     private void BtnloginMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnloginMouseEntered
-        Btnlogin.setBackground(new Color(0,102,153));
-        JBtnlogin.setForeground(new Color(255,255,255));
+        Btnlogin.setBackground(new Color(0, 102, 153));
+        JBtnlogin.setForeground(new Color(255, 255, 255));
     }//GEN-LAST:event_BtnloginMouseEntered
 
     private void BtnloginMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnloginMouseExited
-        Btnlogin.setBackground(new Color(255,255,255));
-        JBtnlogin.setForeground(new Color(0,102,153));
+        Btnlogin.setBackground(new Color(255, 255, 255));
+        JBtnlogin.setForeground(new Color(0, 102, 153));
     }//GEN-LAST:event_BtnloginMouseExited
+
+    private void txtrfidActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtrfidActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtrfidActionPerformed
+
+    private void txtrfidKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtrfidKeyReleased
+        String Rfid = txtrfid.getText();
+        try {
+            String sql = "SELECT * FROM tbl_users WHERE id_user = ?";
+            java.sql.Connection conn = (Connection) Conn.GetConn();
+            java.sql.PreparedStatement stm = conn.prepareStatement(sql);
+            stm.setString(1, Rfid);
+            java.sql.ResultSet res = stm.executeQuery();
+            if (res.next()) {
+                txtrfid.setText(res.getString("id_user"));
+                txtuser.setText(res.getString("username"));
+                txtpwd.setText(res.getString("password"));
+
+                // Perform the login operation
+                login();
+            }
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
+
+     private void login() {
+    String Iduser = txtrfid.getText();
+    try {
+        String sql = "SELECT * FROM tbl_users WHERE id_user = ?";
+        java.sql.Connection conn = (Connection) Conn.GetConn();
+        java.sql.PreparedStatement stm = conn.prepareStatement(sql);
+        stm.setString(1, Iduser);
+        java.sql.ResultSet res = stm.executeQuery();
+        if (res.next()) {
+            String Status = res.getString("status_user");
+            if (Status.equals("Admin")) {
+                Formadmin admin = new Formadmin(Iduser);
+                JOptionPane.showMessageDialog(null, "Login berhasil sebagai Admin");
+                this.setVisible(false);
+                admin.setVisible(true);
+            } else if (Status.equals("Kasir")) {
+                FormKasir kasir = new FormKasir(Iduser);
+                JOptionPane.showMessageDialog(null, "Login berhasil sebagai Kasir");
+                kasir.setVisible(true);
+                this.setVisible(false);
+            } else if (Status.equals("Karyawan")) {
+                FormKaryawan karyawan = new FormKaryawan(Iduser);
+                JOptionPane.showMessageDialog(null, "Login berhasil sebagai Karyawan");
+                this.setVisible(false);
+                karyawan.setVisible(true);
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "User tidak dapat ditemukan");
+            clear();
+        }
+    } catch (Exception e) {
+        System.out.println("Error: " + e.getMessage());
+    }
+
+    }//GEN-LAST:event_txtrfidKeyReleased
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -358,12 +438,14 @@ public class Formlogin extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel show;
     private javax.swing.JPasswordField txtpwd;
+    private javax.swing.JTextField txtrfid;
     private javax.swing.JTextField txtuser;
     // End of variables declaration//GEN-END:variables
 }
